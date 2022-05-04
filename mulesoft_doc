@@ -1,0 +1,124 @@
+/*CREATING A NEW DATABASE*/
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class JDBCExample {
+   static final String DB_URL = "jdbc:mysql://localhost/";
+   static final String USER = "guest";
+   static final String PASS = "guest123";
+
+   public static void main(String[] args) {
+      // Open a connection
+      try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+         Statement stmt = conn.createStatement();
+      ) {		      
+         String sql = "CREATE DATABASE MOVIE";
+         stmt.executeUpdate(sql);
+         System.out.println("Database created successfully...");   	  
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } 
+   }
+}
+
+/*CREATING A NEW TABLE*/
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class TestApplication {
+   static final String DB_URL = "jdbc:mysql://localhost/SOMEFILE";
+   static final String USER = "guest";
+   static final String PASS = "guest123";
+
+   public static void main(String[] args) {
+      // Open a connection
+      try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+         Statement stmt = conn.createStatement();
+      ) {		      
+          String sql = "CREATE TABLE Movies " +
+                   "(m_id INTEGER not NULL, " +
+                   " mov_name VARCHAR(100), " + 
+                   " mov_year VARCHAR(100), " + 
+                   " mov_lang VARCHAR(100), " + 
+                   " actor VARCHAR(100), " + 
+                   " actress VARCHAR(255), " + 
+                   " director VARCHAR(255), " + 
+                   " PRIMARY KEY ( m_id ))"; 
+
+         stmt.executeUpdate(sql);
+         System.out.println("Created table in given database...");   	  
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } 
+   }
+}
+
+/*INSERTING DATA INTO MOVIES TABLE*/
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class JDBCExample {
+   static final String DB_URL = "jdbc:mysql://localhost/SOMEFILE";
+   static final String USER = "guest";
+   static final String PASS = "guest123";
+
+   public static void main(String[] args) {
+      // Open a connection
+      try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+         Statement stmt = conn.createStatement();
+      ) {		      
+         // Execute a query
+         System.out.println("Inserting records into the table...");          
+         String sql = "INSERT INTO Movies VALUES (100, 'James', '2022', 'Kannada', 'Puneeth Rajkumar', 'Priya Anand', 'Chethan Kumar')";
+         stmt.executeUpdate(sql);
+         sql = "INSERT INTO Movies VALUES (101, 'Googly', '2013', 'Kannada', 'Yash', 'Kriti Karabandha', 'Pavan Wadeyar')";
+         stmt.executeUpdate(sql);
+         sql = "INSERT INTO Movies VALUES (102, 'Arya 2', '2009', 'Telgu', 'Allu Arjun', 'Kajal Aggarwal', 'Sukumar')";
+         stmt.executeUpdate(sql);
+         sql = "INSERT INTO Movies VALUES(103, 'Mr Perfect', '2011', 'Telgu', 'Prabhas', 'Kajal Aggarwal', 'Dasaradh')";
+         stmt.executeUpdate(sql);
+        System.out.println("Inserted records into the table...");   	  
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } 
+   }
+}
+
+/*QUERING DATA FROM MOVIES TABLE USING SELECT COMMAND*/
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+public class JDBCExample {
+   static final String DB_URL = "jdbc:mysql://localhost/SOMEFILE";
+   static final String USER = "guest";
+   static final String PASS = "guest123";
+   static final String QUERY = "SELECT mov_name, actor, actress, director, mov_year FROM Movies";
+
+   public static void main(String[] args) {
+      // Open a connection
+      try(Connection conn = DriverManager.getConnection(DB_URL, USER, PASS);
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(QUERY);
+      ) {		      
+         while(rs.next()){
+            //Display values
+            System.out.print("mov_name: " + rs.getInt("mov_name"));
+            System.out.print(", actor: " + rs.getInt("actor"));
+            System.out.print(", actress: " + rs.getString("actress"));
+            System.out.println(", director: " + rs.getString("director"));
+            System.out.print("mov_year: " + rs.getInt("mov_year"));
+         }
+      } catch (SQLException e) {
+         e.printStackTrace();
+      } 
+   }
+}
